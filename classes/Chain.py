@@ -3,8 +3,6 @@ import os
 from classes.Block import Block
 from classes.Wallet import Wallet
 import hashlib
-import string
-import random 
 import sys
 
 class Chain:
