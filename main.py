@@ -34,7 +34,7 @@ if __name__ == "__main__":
     print("block hash : {}".format(block_02))
 
     chain.add_transaction(wallet_01.unic_id, wallet_02.unic_id,20)
-    print("Return the hash of the block containing the transaction 0 : {}".format(chain.find_transaction(0).hash))
+    print("Return the hash of the block containing the transaction 1 : {}".format(chain.find_transaction(1).hash))
    
     print(wallet_01.load())
     print(wallet_02.load())
