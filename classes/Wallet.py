@@ -37,13 +37,16 @@ class Wallet:
         else:
             self.balance = self.balance - amount 
 
-    def send(self, unic_id):
+    def send(self):
+        pass
+
+    def load(self, unic_id):
 
         filename = str(unic_id) + ".json"
         path_wallets_folder = "./content/wallets/"
         file_names = []
 
-        for (dirpath, s, filenames) in walk(path_wallets_folder):
+        for (dirpath, filenames, filenames) in walk(path_wallets_folder):
             file_names.extend(filenames)
             break
 
