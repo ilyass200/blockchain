@@ -5,13 +5,15 @@ from os import walk
 
 class Wallet:
 
-    # init attributes
-    unic_id = int
-    balance = 0 # portfolio balance
-    history = {} # transaction history
+    def __init__(self, unic_id=None):
+        if unic_id is None:
+            self.unic_id = self.generate_unique_id()
+            self.balance = 100
+            self.history = []
+        else:
+            self.unic_id = unic_id
+            self.load()
 
-    def __init__(self):
-        pass
 
     def generate_unique_id(self):
         
@@ -26,23 +28,31 @@ class Wallet:
         while(str(unic_id) + ".json" in file_names):
             unic_id = uuid.uuid1()
         
-        self.unic_id = int(unic_id)
+        return str(unic_id)
 
-    def add_balance(self, amount: int):
-        self.balance = self.balance + amount
+    def add_balance(self, transaction):
+        self.balance = self.balance + transaction["amount"]
+        self.send(transaction)
     
-    def sub_balance(self, amount):
-        if amount > self.balance:
+    def sub_balance(self, transaction):
+        if transaction["amount"] >= self.balance:
             print("ERROR : The amount is higher than your balance !")
         else:
-            self.balance = self.balance - amount 
+            self.balance = self.balance - transaction["amount"] 
+            self.send(transaction)
 
-    def send(self):
-        pass
+    def send(self, transaction):
+        add_transaction = {
+            "wallet_emitter": transaction['wallet_emitter'],
+            "wallet_receiver": transaction['wallet_receiver'],
+            "amount": transaction['amount']
+        }
+        self.history.append(add_transaction)
+        self.save()
 
-    def load(self, unic_id):
+    def load(self):
 
-        filename = str(unic_id) + ".json"
+        filename = str(self.unic_id) + ".json"
         path_wallets_folder = "./content/wallets/"
         file_names = []
 
@@ -66,5 +76,5 @@ class Wallet:
         file_name = "./content/wallets/{}.json".format(self.unic_id)
         jsonString = json.dumps({"id": self.unic_id,"balance": self.balance, "history": self.history})
 
-        with open(file_name, "x") as file:
+        with open(file_name, "w") as file:
             file.write(jsonString)
