@@ -1,4 +1,4 @@
-# blockchain
+# blockchain with python
 blockchain draft developed in python 3.7 designed for Campus Academy for the 2nd year of the Campus Contest. 
 
 # How does it work ?
